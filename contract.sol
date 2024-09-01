@@ -52,5 +52,16 @@ contract DAO{
         totalAmount+=msg.value;
         investorsList.push(msg.sender);
     }
+
+    function redeemShares(uint amount) public validInvestor() {
+        require(numOfShares[msg.sender]>=amount,"You do not have sufficient funds!");
+        require(totalAmount>=amount,"Can't withdraw,not sufficient funds available!");
+        numOfShares[msg.sender] -= amount;
+        if(numOfShares[msg.sender]==0) {
+            isInvestor[msg.sender] = false;
+        }
+        payable(msg.sender).transfer(amount);
+        totalAmount -= amount;
+    }
     
 }
