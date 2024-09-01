@@ -74,5 +74,19 @@ contract DAO{
         isInvestor[to_address]=true;
         investorsList.push(to_address);
     }
+
+    function createProposal(string calldata _description,uint _amount,address payable _recipient) public validManager() {
+        require(totalAmount>=_amount,"Not enough funds!");
+        proposals[currProposalId] = Proposal({
+            id: currProposalId,
+            description: _description,
+            amount: _amount,
+            recipient: _recipient,
+            votes: 0,
+            end: block.timestamp+voteTime,
+            isExecuted: false
+        });
+        currProposalId++;
+    }
     
 }
