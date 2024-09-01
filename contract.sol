@@ -88,5 +88,14 @@ contract DAO{
         });
         currProposalId++;
     }
+
+    function voteProposal(uint proposalId) public validInvestor() {
+        Proposal storage proposal = proposals[proposalId];
+        require(voted[msg.sender][proposalId]==false,"You have already voted for this proposal!");
+        require(proposal.end>=block.timestamp,"Voting Time has ended for this proposal!");
+        require(proposal.isExecuted==false,"Proposal has already been executed!");
+        voted[msg.sender][proposalId] = true;
+        proposal.votes += numOfShares[msg.sender];
+    }
     
 }
