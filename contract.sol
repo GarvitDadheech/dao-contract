@@ -97,5 +97,13 @@ contract DAO{
         voted[msg.sender][proposalId] = true;
         proposal.votes += numOfShares[msg.sender];
     }
+
+    function executeProposal(uint proposalId) public  validManager() {
+        Proposal storage proposal=proposals[proposalId];
+        require(((proposal.votes*100)/totalShares)>=quorum,"Proposal has been rejected as majority does not supports it!");
+        proposal.isExecuted = true;
+        totalAmount -= proposal.amount;
+        payable(proposal.recipient).transfer(proposal.amount);
+    }
     
 }
