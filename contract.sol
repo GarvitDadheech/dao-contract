@@ -38,9 +38,19 @@ contract DAO{
         _;
     }
 
-   modifier validManager() {
+    modifier validManager() {
         require(manager==msg.sender,"You are not a manager!");
         _;
+    }
+
+    function contribution() public payable {
+        require(contributionTime>=block.timestamp,"Contribution Time has Ended!");
+        require(msg.value>0,"Please send more than 0 ethereum");
+        isInvestor[msg.sender] = true;
+        totalShares+=msg.value;
+        numOfShares[msg.sender] += msg.value;
+        totalAmount+=msg.value;
+        investorsList.push(msg.sender);
     }
     
 }
