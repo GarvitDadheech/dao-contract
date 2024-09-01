@@ -63,5 +63,16 @@ contract DAO{
         payable(msg.sender).transfer(amount);
         totalAmount -= amount;
     }
+
+    function transferShare(uint amount,address to_address) public validInvestor() {
+        require(numOfShares[msg.sender]>=amount,"You do not have sufficient funds!");
+        numOfShares[msg.sender] -= amount;
+        if(numOfShares[msg.sender]==0) {
+            isInvestor[msg.sender] = false;
+        }
+        numOfShares[to_address] += amount;
+        isInvestor[to_address]=true;
+        investorsList.push(to_address);
+    }
     
 }
