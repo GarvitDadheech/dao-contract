@@ -105,5 +105,17 @@ contract DAO{
         totalAmount -= proposal.amount;
         payable(proposal.recipient).transfer(proposal.amount);
     }
+
+    function ProposalList() public view returns(Proposal[] memory){
+        Proposal[] memory temp = new Proposal[](currProposalId);
+        for(uint i=0;i<currProposalId;i++){
+        temp[i]=proposals[i];
+        }
+        return temp;
+    }
+
+    function seeInvestorsList() public view returns(address[] memory) {
+        return investorsList;
+    }
     
 }
