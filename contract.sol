@@ -32,5 +32,15 @@ contract DAO{
         quorum = _quorum;
         manager = msg.sender;
     }
+
+    modifier validInvestor() {
+        require(isInvestor[msg.sender],"You are not an investor!");
+        _;
+    }
+
+   modifier validManager() {
+        require(manager==msg.sender,"You are not a manager!");
+        _;
+    }
     
 }
